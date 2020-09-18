@@ -38,3 +38,38 @@ export const updateCodeStore = newState => {
   codeStore.set(newState);
   replace('/edit/' + Base64.encodeURI(JSON.stringify(newState)))
 };
+export const detectType = text => {
+  text = text.replace(/^\s*%%.*\n/g, '\n');
+  console.debug('Detecting diagram type based on the text ' + text);
+  if (text.match(/^\s*sequenceDiagram/)) {
+    return 'sequence';
+  }
+
+  if (text.match(/^\s*gantt/)) {
+    return 'gantt';
+  }
+
+  if (text.match(/^\s*classDiagram/)) {
+    return 'class';
+  }
+
+  if (text.match(/^\s*stateDiagram/)) {
+    return 'state';
+  }
+
+  if (text.match(/^\s*gitGraph/)) {
+    return 'git';
+  }
+  if (text.match(/^\s*flowchart/)) {
+    return 'flowchart';
+  }
+
+  if (text.match(/^\s*info/)) {
+    return 'info';
+  }
+  if (text.match(/^\s*pie/)) {
+    return 'pie';
+  }
+
+  return 'flowchart';
+};
